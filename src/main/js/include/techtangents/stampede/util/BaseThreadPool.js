@@ -1,7 +1,20 @@
 techtangents.stampede.util.BaseThreadPool = (function(util) {
 
     var create = function(numThreads) {
-        var javaPool = java.util.concurrent.Executors.newFixedThreadPool(numThreads);
+
+        var cc = java.util.concurrent;
+
+        var baseTF = cc.Executors.defaultThreadFactory();
+
+        var factory = new cc.ThreadFactory({
+            newThread: function(r) {
+                var t = baseTF.newThread(r);
+                t.setDaemon(true);
+                return t;
+            }
+        });
+
+        var javaPool = cc.Executors.newFixedThreadPool(numThreads, factory);
 
         /** Submits a js function as a task.
          *  @param task: function
@@ -17,8 +30,13 @@ techtangents.stampede.util.BaseThreadPool = (function(util) {
             };
         }
 
+        function drain() {
+            pool.shutdown();
+        }
+
         return {
-            submit: submit
+            submit: submit,
+            drain: drain
         };
     };
 

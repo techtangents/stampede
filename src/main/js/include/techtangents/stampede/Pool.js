@@ -37,7 +37,8 @@ techtangents.stampede.Pool = (function(stampede) {
 
         return {
             submit: submit,
-            submitWithArgs: submitWithArgs
+            submitWithArgs: submitWithArgs,
+            drain: basePool.drain
         };
     };
 

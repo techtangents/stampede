@@ -4,8 +4,9 @@ function test() {
 
     var input = TestData.sequence(1000);
 
+    var para = techtangents.stampede.Parallel;
+
     var f = function(x) {
-        java.lang.Thread.sleep(1, 0);
         return x + "_";
     }
 
@@ -14,7 +15,7 @@ function test() {
     }
 
     function parallel() {
-        return techtangents.stampede.Parallel.pmap(input, f);
+        return para.pmap(input, f);
     }
 
     function run(fn) {
@@ -27,10 +28,11 @@ function test() {
         print(output);
     }
 
-    var sResult = run("serial", serial);
-    var pResult = run("parallel", parallel);
+    var sResult = run(serial);
+    var pResult = run(parallel);
 
-    jssert.assertEq(sResult, pResult);
+    // FIX: use jssert
+    assertArrayEquals(sResult.result, pResult.result);
 
     out("serial", sResult);
     out("parallel", pResult);
