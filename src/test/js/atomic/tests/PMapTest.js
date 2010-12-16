@@ -14,26 +14,25 @@ function test() {
         return input.map(f);
     }
 
+    function loop() {
+        var len = input.length;
+        var r = new Array(len);
+        for (var i = 0; i < len; i++) {
+            r[i] = f(i);
+        }
+        return r;
+    }
+
     function parallel() {
         return para.pmap(input, f);
     }
 
-    function run(fn) {
-        return Profiler.timed(fn);
-    }
-
-    function out(name, x) {
-        var output = name + ": " + x.delta + " ms\n"
-               + x.result;
-        print(output);
-    }
-
-    var sResult = run(serial);
-    var pResult = run(parallel);
+    var results = {
+        map: Profiler.timed("Array.prototype.map", serial),
+        loop: Profiler.timed("loop", loop),
+        parallel: Profiler.timed("parallel", parallel)
+    };
 
     // FIX: use jssert
-    assertArrayEquals(sResult.result, pResult.result);
-
-    out("serial", sResult);
-    out("parallel", pResult);
+    assertArrayEquals(results.map, results.parallel);
 }

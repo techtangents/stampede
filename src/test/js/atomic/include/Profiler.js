@@ -9,14 +9,12 @@ var Profiler = (function() {
         return now() - start;
     }
 
-    function timed(f) {
+    function timed(message, f) {
         var start = now();
         var result = f();
         var delta = elapsed(start);
-        return {
-            result: result,
-            delta: delta
-        };
+        print(message + ": " + delta + " ms");
+        return result;
     }
     
     return {
