@@ -1,14 +1,10 @@
 require("../include/include.js");
 
-function test() {
-
-    var input = TestData.sequence(1000);
+function check(name, f) {
+    print("------------------------ " + name);
+    var input = TestData.sequence(10000);
 
     var para = techtangents.stampede.Parallel;
-
-    var f = function(x) {
-        return x + "_";
-    }
 
     function serial() {
         return input.map(f);
@@ -35,4 +31,31 @@ function test() {
 
     // FIX: use jssert
     assertArrayEquals(results.map, results.parallel);
+}
+
+function test() {
+    var id = function(x) {
+        return x;
+    };
+
+    var append = function(x) {
+        return x + "_";
+    };
+
+    var spin = function(x) {
+        for (var i = 0; i < 100; i++){}
+        return x;
+    }
+
+    var spin2 = function(x) {
+        for (var i = 0; i < 10000; i++){}
+        return x;
+    }
+
+    check("id", id);
+    check("append", append);
+    check("spin", spin);
+    check("spin2", spin2);
+
+    print("----------------------------------")
 }
