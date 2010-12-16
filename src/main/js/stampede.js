@@ -6,12 +6,7 @@
         base + "_.js",
         util + "_.js",
 
-        util + "BaseThreadPool.js",
-        util + "Funk.js",
-        util + "Future.js",
-        util + "JavaCallable.js",
-
-        base + "Pool.js",
+        util + "ThreadPool.js",
         base + "Parallel.js"
     ]);
 })();
