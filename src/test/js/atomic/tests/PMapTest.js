@@ -19,6 +19,19 @@ function check(name, f) {
         return r;
     }
 
+    function loopWithRunnable() {
+        var len = input.length;
+        var r = new Array(len);
+        for (var i = 0; i < len; i++) {
+            new java.lang.Runnable({
+                run: function() {
+                    r[i] = f(i);
+                }
+            }).run();
+        }
+        return r;
+    }
+
     function parallel() {
         return para.pmap(input, f);
     }
@@ -26,6 +39,7 @@ function check(name, f) {
     var results = {
         map: Profiler.timed("Array.prototype.map", serial),
         loop: Profiler.timed("loop", loop),
+        loopWithRunnable: Profiler.timed("loopWithRunnable", loopWithRunnable),
         parallel: Profiler.timed("parallel", parallel)
     };
 
