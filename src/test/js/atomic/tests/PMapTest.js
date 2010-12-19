@@ -56,6 +56,11 @@ function test() {
         return x + "_";
     };
 
+    var withSleep = function(x) {
+        java.lang.Thread.sleep(1);
+        return x;
+    }
+
     var spin = function(x) {
         for (var i = 0; i < 100; i++){}
         return x;
@@ -68,8 +73,9 @@ function test() {
 
     check("id", id);
     check("append", append);
+    check("withSleep", withSleep);
     check("spin", spin);
     check("spin2", spin2);
 
-    print("----------------------------------")
+    print("----------------------------------");
 }
